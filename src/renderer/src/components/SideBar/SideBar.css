@@ -1,0 +1,36 @@
+.side-bar-main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.chat-list {
+    width: 100%;
+    height: 70%;
+}
+
+.friend-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+    transition: 0.3s ease;
+    padding: 5px;
+}
+
+.friend-info:hover{
+    cursor: pointer;
+    transition: 0.3s ease;
+    background-color: #eeeeee;
+}
+
+.side-setting-tools {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
