@@ -4,7 +4,6 @@
 
 <script setup>
 import ChatWindow from "../ChatWindow/ChatWindow.vue";
-import SideBar from "../../components/SideBar/SideBar.vue";
 </script>
 
 <style scoped>

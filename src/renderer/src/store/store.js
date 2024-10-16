@@ -4,7 +4,12 @@ const store = createStore({
   state() {
     return {
       ROOT_URL: '',
-      token: ''
+      token: '',
+      user:{
+        userId: '',
+        userName: '',
+      },
+      socket: null,
     }
   }
 })
