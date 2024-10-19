@@ -5,7 +5,7 @@ class WebSocketApi {
   listeners = []
 
   connect() {
-    store.state.socket = new WebSocket(`ws://${store.state.ROOT_URL}/ws?token=${store.state.token}`)
+    store.state.socket = new WebSocket(`${store.state.SOCKET_URL}?token=${store.state.token}`)
     this.socket = store.state.socket
     this.socket.onopen = () => {
       console.log('WebSocket connected')
@@ -26,11 +26,12 @@ class WebSocketApi {
   }
 
   notifyListeners(message) {
-    this.listeners.forEach(callback => callback(data))
+    this.listeners.forEach(callback => callback(message))
   }
 
   send(message) {
-    this.socket.send(message)
+    let strMessage = JSON.stringify(message)
+    this.socket.send(strMessage)
   }
 }
 

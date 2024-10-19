@@ -18,6 +18,8 @@
 }
 
 #chat-title {
+  height: 32px;
+  line-height: 1;
   color: #515c67;
   font-size: 32px;
   font-weight: 500;
@@ -47,4 +49,9 @@
   background-color: rgba(239, 239, 239, 0.5);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+}
+
+.chat-window-placeholder {
+  width: 100%;
+  height: 20vh;
 }

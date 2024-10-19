@@ -6,10 +6,10 @@
       </n-h1>
       <n-form>
         <n-form-item label="用户名">
-          <n-input v-model="userName" placeholder="请输入用户名" />
+          <n-input v-model:value="userName" placeholder="请输入用户名" />
         </n-form-item>
         <n-form-item label="密码">
-          <n-input v-model="password" type="password" placeholder="请输入密码" />
+          <n-input v-model:value="password" type="password" placeholder="请输入密码" />
         </n-form-item>
       </n-form>
       <n-button type="primary" @click="login">登录</n-button>
@@ -23,13 +23,13 @@
       </n-h1>
       <n-form>
         <n-form-item label="用户名">
-          <n-input v-model="userName" placeholder="请输入用户名" />
+          <n-input v-model:value="userName" placeholder="请输入用户名" />
         </n-form-item>
         <n-form-item label="密码">
-          <n-input v-model="password" type="password" placeholder="请输入密码" />
+          <n-input v-model:value="password" type="password" placeholder="请输入密码" />
         </n-form-item>
       </n-form>
-      <n-button type="primary" @click="login">注册</n-button>
+      <n-button type="primary" @click="register">注册</n-button>
       <n-divider vertical />
       <n-button type="tertiary" text @click="switchMode">有账号了，前往登录</n-button>
     </div>
@@ -57,6 +57,7 @@ onMounted(() => {
 })
 
 function login() {
+
   if (userName.value.length === 0 || password.value.length === 0) {
     alert('用户名或密码不能为空')
     return
@@ -67,7 +68,8 @@ function login() {
       alert('密码或者账号错误')
       return
     }
-    router.replace('/')
+    window.$message.success('登录成功')
+    router.push('/')
   })
 }
 
