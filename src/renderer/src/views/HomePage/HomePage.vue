@@ -1,19 +1,23 @@
 <template>
-  <ChatWindow v-model:messages="messageList"
-              :chat-info="currentChat"
-              :users-info="userInfoList"
-              :public-chat="isPublicChat" />
+  <ChatWindow
+    v-model:messages="messageList"
+    :chat-info="currentChat"
+    :users-info="userInfoList"
+    :public-chat="isPublicChat"
+  />
   <div class="chat-input-tools">
     <n-button circle>
       <n-avatar circle />
     </n-button>
 
     <!-- 选择聊天 -->
-    <n-popselect trigger="click"
-                 :options="userOptions"
-                 :render-label="renderOptions"
-                 :value="currentChat.userId"
-                 @update-value="selectChat">
+    <n-popselect
+      trigger="click"
+      :options="userOptions"
+      :render-label="renderOptions"
+      :value="currentChat.userId"
+      @update-value="selectChat"
+    >
       <n-button circle type="info">
         <n-icon size="large" :component="UserFriends" />
       </n-button>
@@ -23,7 +27,7 @@
     <n-button circle type="primary">
       <n-icon size="large" :component="FileMedical" />
     </n-button>
-    <n-input placeholder="请输入内容" round v-model:value="sendContent" />
+    <n-input v-model:value="sendContent" placeholder="请输入内容" round />
     <n-button circle type="primary" @click="send">
       <n-icon size="large" :component="PaperPlane" />
     </n-button>
@@ -40,32 +44,34 @@ import { renderOptions } from './HomePage'
 import WebSocketApi from '../../api/WebSocketApi'
 import CommonApi from '../../api/CommonApi'
 import GlobalName from '../../utils/GlobalName'
+import store from '../../store/store'
 
 const currentChat = ref({
-  userId: GlobalName.CHAT_PUBLIC_RECEIVER,
-  userName: '全局聊天'
+  userId: '',
+  userName: '请选择聊天'
 })
-const messageList = ref([
+/*
   {
+    type: '',
     senderUserId: 'name',
     receiverUserId: 'name',
     timeStamp: Date.now(),
     message: 'hello world'
   }
-])
+*/
+const messageList = ref([])
 const isPublicChat = ref(false)
 const userInfoList = ref([])
 const sendContent = ref('')
 
 onMounted(() => {
   // 获取所有用户信息
-  CommonApi.getAllUsers().then(res => {
+  CommonApi.getAllUsers().then((res) => {
     userInfoList.value = res
   })
   // 注册消息监听
-  WebSocketApi.addMessageListener(message => onReceiveNewMessage(JSON.parse(message)))
+  WebSocketApi.addMessageListener((message) => onReceiveNewMessage(JSON.parse(message)))
 })
-
 
 const userOptions = computed(() => {
   let userOptions = []
@@ -73,7 +79,7 @@ const userOptions = computed(() => {
     value: GlobalName.CHAT_PUBLIC_RECEIVER,
     userName: '全局聊天'
   })
-  userInfoList.value.map(userInfo => {
+  userInfoList.value.map((userInfo) => {
     userOptions.push({
       value: userInfo.userId,
       userName: userInfo.userName
@@ -91,7 +97,9 @@ function selectChat(value, option) {
     isPublicChat.value = false
     currentChat.value.userName = option.userName
   }
-  console.log('options:', currentChat.value)
+
+  console.log('userId', currentChat.value.userId)
+  ChatApi.getChat(currentChat.value.userId).then((res) => (messageList.value = res))
 }
 
 function send() {
@@ -116,15 +124,21 @@ function send() {
   clientMessage.timeStamp = Date.now()
 
   ChatApi.sendChatMessage(clientMessage)
+
+  const message = {
+    senderUserId: store.state.user.userId,
+    receiverUserId: currentChat.value.userId,
+    timeStamp: clientMessage.timeStamp,
+    message: sendContent.value
+  }
+
+  messageList.value.push(message)
+  ChatApi.saveNewMessage(message)
   sendContent.value = ''
 }
 
 function onReceiveNewMessage(message) {
-  if (message.type === GlobalName.CHAT_TYPE_PUBLIC) {
-    ChatApi.receiveNewPublicMessage(message)
-  } else {
-    ChatApi.receiveNewMessage(message)
-  }
+  ChatApi.saveNewMessage(message)
   console.log(message.receiveUserId, currentChat.value.userId)
   if (message.receiveUserId === currentChat.value.userId) {
     messageList.value.push(message)

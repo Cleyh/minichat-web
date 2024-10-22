@@ -3,7 +3,7 @@
     <div class="message-sender">
       <div class="sender-avatar">
         <n-avatar size="small" round :color="'#558dff'">
-          <n-icon :component="User" size="16"/>
+          <n-icon :component="User" size="16" />
         </n-avatar>
       </div>
       <div class="message-sender-info">
@@ -40,6 +40,4 @@ const props = defineProps({
 // const message = defineModel('message')
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

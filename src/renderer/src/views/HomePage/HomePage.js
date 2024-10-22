@@ -3,7 +3,8 @@ import { NAvatar, NTag } from 'naive-ui'
 import ChatApi from '../../api/ChatApi'
 
 export const renderOptions = (option) => {
-  return h('div',
+  return h(
+    'div',
     {
       style: {
         display: 'flex',
@@ -14,15 +15,18 @@ export const renderOptions = (option) => {
       }
     },
     [
-      h(NAvatar, {
-        circle: true,
-        size: 'small'
-      }, option.userName.substring(0, 1)),
+      h(
+        NAvatar,
+        {
+          circle: true,
+          size: 'small'
+        },
+        option.userName.substring(0, 1)
+      ),
       h('span', option.userName)
     ]
   )
 }
-
 
 let userChatList = []
 

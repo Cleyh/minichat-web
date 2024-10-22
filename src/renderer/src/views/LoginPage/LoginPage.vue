@@ -1,9 +1,7 @@
 <template>
   <div id="login-page">
     <div v-if="registerMode !== true" class="obscure glass" style="width: 60%">
-      <n-h1>
-        请登录
-      </n-h1>
+      <n-h1> 请登录 </n-h1>
       <n-form>
         <n-form-item label="用户名">
           <n-input v-model:value="userName" placeholder="请输入用户名" />
@@ -18,9 +16,7 @@
     </div>
 
     <div v-else class="obscure glass" style="width: 60%">
-      <n-h1>
-        请注册
-      </n-h1>
+      <n-h1> 请注册 </n-h1>
       <n-form>
         <n-form-item label="用户名">
           <n-input v-model:value="userName" placeholder="请输入用户名" />
@@ -34,7 +30,6 @@
       <n-button type="tertiary" text @click="switchMode">有账号了，前往登录</n-button>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -57,13 +52,12 @@ onMounted(() => {
 })
 
 function login() {
-
   if (userName.value.length === 0 || password.value.length === 0) {
     alert('用户名或密码不能为空')
     return
   }
 
-  LoginApi.login(userName.value, password.value).then(res => {
+  LoginApi.login(userName.value, password.value).then((res) => {
     if (!res) {
       alert('密码或者账号错误')
       return
@@ -78,7 +72,7 @@ function register() {
     alert('用户名或密码不能为空')
     return
   }
-  LoginApi.register(userName.value, password.value).then(res => {
+  LoginApi.register(userName.value, password.value).then((res) => {
     if (!res) {
       alert('用户名已存在')
       return

@@ -21,6 +21,7 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
     "axios": "^1.7.7",
+    "dexie": "^4.0.8",
     "electron-updater": "^6.1.7",
     "vue-native-websocket": "^2.0.15",
     "vue-router": "^4.4.5",

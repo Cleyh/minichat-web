@@ -24,7 +24,7 @@ class Request {
       },
       data: this.data,
       ...this.config
-    }).then(res => {
+    }).then((res) => {
       console.log(res)
       return res.data
     })

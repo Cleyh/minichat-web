@@ -5,9 +5,22 @@ class CommonApi {
     return new Request({
       url: '/chat/getAllUsers',
       method: 'GET'
-    }).send().then(res => {
-      return res.data
     })
+      .send()
+      .then((res) => {
+        return res.data
+      })
+  }
+
+  async getLatestChats() {
+    return new Request({
+      url: '/chat/getLatest',
+      method: 'GET'
+    })
+      .send()
+      .then((res) => {
+        return res.data
+      })
   }
 }
 

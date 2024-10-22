@@ -1,6 +1,7 @@
 import Request from '../api/baseApi/Request'
 import store from '../store/store'
 import WebSocketApi from './WebSocketApi'
+import { initDb } from '../utils/DataStore'
 
 class LoginApi {
   constructor() {
@@ -15,18 +16,21 @@ class LoginApi {
         userName: userName,
         password: password
       }
-    }).send().then(res => {
-      console.log(res)
-
-      if (res.status !== 'success') {
-        return false
-      }
-
-      store.state.token = res.message
-      store.state.user = res.data
-      WebSocketApi.connect()
-      return true
     })
+      .send()
+      .then((res) => {
+        console.log(res)
+
+        if (res.status !== 'success') {
+          return false
+        }
+
+        store.state.token = res.message
+        store.state.user = res.data
+        initDb()
+        WebSocketApi.connect()
+        return true
+      })
   }
 
   async register(userName, password) {
@@ -38,9 +42,11 @@ class LoginApi {
         userName: userName,
         password: password
       }
-    }).send().then(res => {
-      return res.status === 'success'
     })
+      .send()
+      .then((res) => {
+        return res.status === 'success'
+      })
   }
 }
 
